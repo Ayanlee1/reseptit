@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Uusi resepti</title>
+</head>
+
+<body>
+
+    <h1>Uusi resepti</h1>
+    <form action="/create_recipe" method="post">
+        <p>
+            Otsikko: <br>
+            <input type="text" name="title">
+        </p>
+        <p>
+            Resepti: <br>
+            <textarea name="content" rows="5" cols="40"></textarea>
+        </p>
+        <input type="submit" value="Luo resepti">
+    </form>
+    <p><a href="/">Takaisin etusivulle</a></p>
+    
+</body>
+
+</html>

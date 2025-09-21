@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Reseptit</title>
+</head>
+
+<body>
+    <h1>Reseptit</h1>
+
+    {% if session.username %}
+        <p>Olet kirjautunut nimellä {{ session.username }}</p>
+        <p><a href="/logout">Kirjaudu ulos</a></p>
+        <p><a href="/new_recipe">Uusi resepti</a></p>
+    {% else %}
+        <p><a href="/login">Kirjaudu sisään</a> | <a href="/register">Luo tunnus</a></p>
+    {% endif %}
+
+    <h2>Kaikki reseptit</h2>
+    {% for recipe in recipes %}
+        <div>
+            <h3>{{ recipe.title }}</h3>
+            <p>{{ recipe.content }}</p>
+            <hr>
+        </div>
+    {% endfor %}
+
+    <h2>Hae reseptejä</h2>
+    <form action="/search" method="get">
+        <input type="text" name="query" placeholder="Hakusana">
+        <input type="submit" value="Hae">
+    </form>
+    
+</body>
+
+</html>

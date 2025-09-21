@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hakutulokset</title>
+</head>
+
+<body>
+    <h1>Hakutulokset</h1>
+    <p>Hakutermi: "{{ query }}"</p>
+    
+    {% if recipes %}
+        <h2>Löydetyt reseptit</h2>
+        {% for recipe in recipes %}
+            <div>
+                <h3>{{ recipe.title }}</h3>
+                <p>{{ recipe.content }}</p>
+                <hr>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Ei hakutuloksia.</p>
+    {% endif %}
+    
+    <p><a href="/">Takaisin etusivulle</a></p>
+</body>
+
+</html>
