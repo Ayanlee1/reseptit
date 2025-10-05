@@ -1,28 +1,43 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Hakutulokset</title>
+    <title>Hae reseptejä</title>
 </head>
-
 <body>
-    <h1>Hakutulokset</h1>
-    <p>Hakutermi: "{{ query }}"</p>
-    
-    {% if recipes %}
-        <h2>Löydetyt reseptit</h2>
-        {% for recipe in recipes %}
-            <div>
-                <h3>{{ recipe.title }}</h3>
-                <p>{{ recipe.content }}</p>
+    <h1>Hae reseptejä</h1>
+
+    <p><a href="/">Etusivu</a> | <a href="/categories">Kategoriat</a></p>
+
+    {% for message in get_flashed_messages() %}
+        <p><strong>{{ message }}</strong></p>
+    {% endfor %}
+
+    <form action="/search" method="get">
+        <p>
+            Hakusana:<br>
+            <input type="text" name="query" value="{{ query }}" placeholder="Etsi reseptejä">
+        </p>
+        <input type="submit" value="Hae">
+    </form>
+
+    {% if query %}
+        <h2>Hakutulokset: "{{ query }}"</h2>
+        
+        {% if recipes %}
+            {% for recipe in recipes %}
+                <div>
+                    <h3><a href="/recipe/{{ recipe.id }}">{{ recipe.title }}</a></h3>
+                    <p>Tekijä: {{ recipe.username }}</p>
+                    <p>{{ recipe.content }}</p>
+                    <a href="/recipe/{{ recipe.id }}">Katso resepti</a>
+                </div>
                 <hr>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>Ei hakutuloksia.</p>
+            {% endfor %}
+        {% else %}
+            <p>Ei tuloksia.</p>
+        {% endif %}
     {% endif %}
-    
+
     <p><a href="/">Takaisin etusivulle</a></p>
 </body>
-
 </html>

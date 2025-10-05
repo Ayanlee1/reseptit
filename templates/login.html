@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Kirjaudu sisään</title>
 </head>
-
 <body>
-
     <h1>Kirjaudu sisään</h1>
+
+    <p><a href="/">Etusivu</a> | <a href="/search">Hae reseptejä</a> | <a href="/categories">Kategoriat</a></p>
+
+    {% for message in get_flashed_messages() %}
+        <p><strong>{{ message }}</strong></p>
+    {% endfor %}
+
     <form action="/login" method="post">
         <p>
-            Käyttäjätunnus: <br>
-            <input type="text" name="username">
+            Käyttäjätunnus:<br>
+            <input type="text" name="username" required>
         </p>
         <p>
-            Salasana: <br>
-            <input type="password" name="password">
+            Salasana:<br>
+            <input type="password" name="password" required>
         </p>
         <input type="submit" value="Kirjaudu">
     </form>
-    <p><a href="/register">Luo tunnus</a></p>
-    
-</body>
 
+    <p>Ei tunnusta? <a href="/register">Luo tunnus</a></p>
+</body>
 </html>

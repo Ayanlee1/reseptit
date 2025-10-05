@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kategoriat</title>
+</head>
+<body>
+    <h1>Kategoriat</h1>
+
+    <p><a href="/">Etusivu</a> | <a href="/search">Hae reseptejä</a></p>
+
+    {% for message in get_flashed_messages() %}
+        <p><strong>{{ message }}</strong></p>
+    {% endfor %}
+
+    {% if categories %}
+        <ul>
+        {% for category in categories %}
+            <li>{{ category.name }} ({{ category.recipe_count }} reseptiä)</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Ei kategorioita.</p>
+    {% endif %}
+
+    <p><a href="/">Takaisin etusivulle</a></p>
+</body>
+</html>

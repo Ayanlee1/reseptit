@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ recipe.title }}</title>
+</head>
+<body>
+    <h1>{{ recipe.title }}</h1>
+
+    <p><a href="/">Etusivu</a> | <a href="/search">Hae reseptejä</a> | <a href="/categories">Kategoriat</a></p>
+
+    {% if session.username %}
+        <p>Kirjautunut: {{ session.username }}</p>
+    {% else %}
+        <p><a href="/login">Kirjaudu sisään</a> | <a href="/register">Luo tunnus</a></p>
+    {% endif %}
+
+    {% for message in get_flashed_messages() %}
+        <p><strong>{{ message }}</strong></p>
+    {% endfor %}
+
+    <p>Tekijä: <a href="/user/{{ recipe.user_id }}">{{ recipe.username }}</a></p>
+
+    {% if categories %}
+        <p>Kategoriat: 
+            {% for category in categories %}
+                {{ category.name }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+    {% endif %}
+
+    <div style="white-space: pre-line;">{{ recipe.content }}</div>
+
+    {% if session.user_id == recipe.user_id %}
+        <p>
+            <a href="/edit_recipe/{{ recipe.id }}">Muokkaa</a>
+            <form action="/delete_recipe/{{ recipe.id }}" method="post" style="display: inline;">
+                <input type="submit" value="Poista" onclick="return confirm('Poistetaanko resepti?');">
+            </form>
+        </p>
+    {% endif %}
+
+    <h2>Arvostelut</h2>
+
+    {% if reviews %}
+        {% for review in reviews %}
+            <div>
+                <strong>{{ review.username }}</strong> ({{ review.rating }}/5)
+                <p>{{ review.comment }}</p>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>Ei arvosteluja vielä.</p>
+    {% endif %}
+
+    {% if session.username %}
+        <h3>Anna arvostelu</h3>
+        <form action="/add_review/{{ recipe.id }}" method="post">
+            <p>
+                Arvosana (1-5):<br>
+                <select name="rating" required>
+                    <option value="">Valitse</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </p>
+            <p>
+                Kommentti:<br>
+                <textarea name="comment" rows="4" required></textarea>
+            </p>
+            <input type="submit" value="Lähetä">
+        </form>
+    {% else %}
+        <p><a href="/login">Kirjaudu sisään</a> antaaksesi arvostelun.</p>
+    {% endif %}
+
+    <p><a href="/">Takaisin etusivulle</a></p>
+</body>
+</html>

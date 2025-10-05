@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Käyttäjä: {{ user.username }}</title>
+</head>
+<body>
+    <h1>Käyttäjä: {{ user.username }}</h1>
+
+    <p><a href="/">Etusivu</a> | <a href="/search">Hae reseptejä</a> | <a href="/categories">Kategoriat</a></p>
+
+    {% for message in get_flashed_messages() %}
+        <p><strong>{{ message }}</strong></p>
+    {% endfor %}
+
+    <p>Reseptejä: {{ recipe_count }}</p>
+
+    {% if user_recipes %}
+        <h2>Käyttäjän reseptit</h2>
+        {% for recipe in user_recipes %}
+            <div>
+                <h3><a href="/recipe/{{ recipe.id }}">{{ recipe.title }}</a></h3>
+                <p>{{ recipe.content }}</p>
+                <a href="/recipe/{{ recipe.id }}">Katso resepti</a>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>Ei reseptejä vielä.</p>
+    {% endif %}
+
+    <p><a href="/">Takaisin etusivulle</a></p>
+</body>
+</html>

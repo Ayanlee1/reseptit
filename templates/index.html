@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Reseptit</title>
 </head>
-
 <body>
     <h1>Reseptit</h1>
 
     {% if session.username %}
-        <p>Olet kirjautunut nimellä {{ session.username }}</p>
-        <p><a href="/logout">Kirjaudu ulos</a></p>
-        <p><a href="/new_recipe">Uusi resepti</a></p>
+        <p>Olet kirjautunut: {{ session.username }} | <a href="/logout">Kirjaudu ulos</a> | <a href="/new_recipe">Uusi resepti</a></p>
     {% else %}
         <p><a href="/login">Kirjaudu sisään</a> | <a href="/register">Luo tunnus</a></p>
     {% endif %}
 
-    <h2>Kaikki reseptit</h2>
-    {% for recipe in recipes %}
-        <div>
-            <h3>{{ recipe.title }}</h3>
-            <p>{{ recipe.content }}</p>
-            <hr>
-        </div>
+    <p><a href="/search">Hae reseptejä</a> | <a href="/categories">Kategoriat</a></p>
+
+    {% for message in get_flashed_messages() %}
+        <p><strong>{{ message }}</strong></p>
     {% endfor %}
 
-    <h2>Hae reseptejä</h2>
-    <form action="/search" method="get">
-        <input type="text" name="query" placeholder="Hakusana">
-        <input type="submit" value="Hae">
-    </form>
-    
-</body>
+    <h2>Kaikki reseptit</h2>
 
+    {% if recipes %}
+        {% for recipe in recipes %}
+            <div>
+                <h3><a href="/recipe/{{ recipe.id }}">{{ recipe.title }}</a></h3>
+                <p>Tekijä: <a href="/user/{{ recipe.user_id }}">{{ recipe.username }}</a></p>
+                <p>{{ recipe.content }}</p>
+                <a href="/recipe/{{ recipe.id }}">Katso resepti</a>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>Ei reseptejä vielä. Lisää ensimmäinen!</p>
+    {% endif %}
+</body>
 </html>

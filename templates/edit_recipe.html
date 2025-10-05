@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Muokkaa reseptiä</title>
+</head>
+<body>
+    <h1>Muokkaa reseptiä</h1>
+
+    <p><a href="/">Etusivu</a> | <a href="/search">Hae reseptejä</a> | <a href="/categories">Kategoriat</a></p>
+
+    {% for message in get_flashed_messages() %}
+        <p><strong>{{ message }}</strong></p>
+    {% endfor %}
+
+    <form action="/update_recipe/{{ recipe.id }}" method="post">
+        <p>
+            Reseptin nimi:<br>
+            <input type="text" name="title" value="{{ recipe.title }}" required>
+        </p>
+        <p>
+            Resepti:<br>
+            <textarea name="content" rows="10" required>{{ recipe.content }}</textarea>
+        </p>
+        <p>
+            Kategoriat:<br>
+            {% for category in categories %}
+                <input type="checkbox" name="categories" value="{{ category.id }}"
+                    {% if category.id in current_ids %}checked{% endif %}>
+                {{ category.name }}<br>
+            {% endfor %}
+        </p>
+        <input type="submit" value="Tallenna">
+    </form>
+
+    <form action="/delete_recipe/{{ recipe.id }}" method="post" onsubmit="return confirm('Poistetaanko resepti?');">
+        <input type="submit" value="Poista">
+    </form>
+
+    <p><a href="/recipe/{{ recipe.id }}">Takaisin reseptiin</a></p>
+</body>
+</html>

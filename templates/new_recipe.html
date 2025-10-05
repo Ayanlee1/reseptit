@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Uusi resepti</title>
 </head>
-
 <body>
-
     <h1>Uusi resepti</h1>
+
+    <p><a href="/">Etusivu</a> | <a href="/search">Hae reseptejä</a> | <a href="/categories">Kategoriat</a></p>
+
+    {% for message in get_flashed_messages() %}
+        <p><strong>{{ message }}</strong></p>
+    {% endfor %}
+
     <form action="/create_recipe" method="post">
         <p>
-            Otsikko: <br>
-            <input type="text" name="title">
+            Reseptin nimi:<br>
+            <input type="text" name="title" required>
         </p>
         <p>
-            Resepti: <br>
-            <textarea name="content" rows="5" cols="40"></textarea>
+            Resepti (ainesosat ja ohjeet):<br>
+            <textarea name="content" rows="10" required></textarea>
         </p>
-        <input type="submit" value="Luo resepti">
+        <p>
+            Kategoriat:<br>
+            {% for category in categories %}
+                <input type="checkbox" name="categories" value="{{ category.id }}">
+                {{ category.name }}<br>
+            {% endfor %}
+        </p>
+        <input type="submit" value="Tallenna">
     </form>
-    <p><a href="/">Takaisin etusivulle</a></p>
-    
-</body>
 
+    <p><a href="/">Takaisin etusivulle</a></p>
+</body>
 </html>
