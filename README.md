@@ -12,15 +12,19 @@ Sovellus, jossa käyttäjät voivat jakaa omia ruokareseptejään.
 
 ## Testausohjeet:
 1. Lataa projekti tiedostot
-2. Asenna kirjastot: pip install flask werkzeug
-3. Luo tietokanta: sqlite3 database.db < schema.sql
-4. Testaaminen:
-   1. Käynnistä sovellus: flask run
-   2. Avaa selaimessa: http://localhost:5000
-   3. Luo uusi tunnus
-   4. Kirjaudu sisään
-   5. Lisää reseptejä etusivulla
-   6. Kokeile hakutoimintoa
-   7. Käy katsomassa toisen käyttäjän reseptejä
-   8. Anna arvostelu reseptille
+2. Luo tietokanta: sqlite3 database.db < schema.sql
+3. Luo virtuaaliympäristö: python3 -m venv venv
+4. Aktivoi virtuaaliympäristö: source venv/bin/activate
+5. Asenna kirjastot: pip install flask werkzeug
+6. Käynnistä sovellus: flask run
+7. Avaa selaimessa: http://localhost:5000
+
+
+## Testaaminen:
+1. Luo uusi tunnus
+2. Kirjaudu sisään
+3. Lisää reseptejä uusi resepti sivulla
+4. Kokeile hakutoimintoa
+5. Käy katsomassa toisen käyttäjän reseptejä
+6. Anna arvostelu reseptille 
   
