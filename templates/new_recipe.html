@@ -1,25 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Uusi resepti</title>
-</head>
-<body>
-    <h1>Uusi resepti</h1>
+{% extends "layout.html" %}
 
-    <p><a href="/">Etusivu</a> | <a href="/search">Hae reseptejä</a> | <a href="/categories">Kategoriat</a></p>
+{% block title %}Uusi resepti{% endblock %}
 
-    {% for message in get_flashed_messages() %}
-        <p><strong>{{ message }}</strong></p>
-    {% endfor %}
+{% block content %}
+    <h2>Uusi resepti</h2>
 
     <form action="/create_recipe" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        
         <p>
-            Reseptin nimi:<br>
-            <input type="text" name="title" required>
+            Reseptin nimi (max 100 merkkiä):<br>
+            <input type="text" name="title" required maxlength="100">
         </p>
         <p>
-            Resepti (ainesosat ja ohjeet):<br>
-            <textarea name="content" rows="10" required></textarea>
+            Resepti (ainesosat ja ohjeet, max 5000 merkkiä):<br>
+            <textarea name="content" rows="10" required maxlength="5000"></textarea>
         </p>
         <p>
             Kategoriat:<br>
@@ -28,9 +23,6 @@
                 {{ category.name }}<br>
             {% endfor %}
         </p>
-        <input type="submit" value="Tallenna">
+        <input type="submit" value="Tallenna resepti">
     </form>
-
-    <p><a href="/">Takaisin etusivulle</a></p>
-</body>
-</html>
+{% endblock %}

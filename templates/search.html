@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hae reseptejä</title>
-</head>
-<body>
-    <h1>Hae reseptejä</h1>
+{% extends "layout.html" %}
 
-    <p><a href="/">Etusivu</a> | <a href="/categories">Kategoriat</a></p>
+{% block title %}Hae reseptejä{% endblock %}
 
-    {% for message in get_flashed_messages() %}
-        <p><strong>{{ message }}</strong></p>
-    {% endfor %}
+{% block content %}
+    <h2>Hae reseptejä</h2>
 
     <form action="/search" method="get">
         <p>
@@ -21,23 +14,19 @@
     </form>
 
     {% if query %}
-        <h2>Hakutulokset: "{{ query }}"</h2>
+        <h3>Hakutulokset: "{{ query }}"</h3>
         
         {% if recipes %}
             {% for recipe in recipes %}
-                <div>
-                    <h3><a href="/recipe/{{ recipe.id }}">{{ recipe.title }}</a></h3>
+                <div class="recipe">
+                    <h4><a href="/recipe/{{ recipe.id }}">{{ recipe.title }}</a></h4>
                     <p>Tekijä: {{ recipe.username }}</p>
-                    <p>{{ recipe.content }}</p>
+                    <p>{{ recipe.content[:200] }}{% if recipe.content|length > 200 %}...{% endif %}</p>
                     <a href="/recipe/{{ recipe.id }}">Katso resepti</a>
                 </div>
-                <hr>
             {% endfor %}
         {% else %}
             <p>Ei tuloksia.</p>
         {% endif %}
     {% endif %}
-
-    <p><a href="/">Takaisin etusivulle</a></p>
-</body>
-</html>
+{% endblock %}

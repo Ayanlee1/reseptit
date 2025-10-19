@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Kategoriat</title>
-</head>
-<body>
-    <h1>Kategoriat</h1>
+{% extends "layout.html" %}
 
-    <p><a href="/">Etusivu</a> | <a href="/search">Hae reseptejä</a></p>
+{% block title %}Kategoriat{% endblock %}
 
-    {% for message in get_flashed_messages() %}
-        <p><strong>{{ message }}</strong></p>
-    {% endfor %}
+{% block content %}
+    <h2>Kategoriat</h2>
 
     {% if categories %}
         <ul>
@@ -21,7 +14,4 @@
     {% else %}
         <p>Ei kategorioita.</p>
     {% endif %}
-
-    <p><a href="/">Takaisin etusivulle</a></p>
-</body>
-</html>
+{% endblock %}

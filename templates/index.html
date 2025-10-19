@@ -1,37 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Reseptit</title>
-</head>
-<body>
-    <h1>Reseptit</h1>
+{% extends "layout.html" %}
 
-    {% if session.username %}
-        <p>Olet kirjautunut: {{ session.username }} | <a href="/logout">Kirjaudu ulos</a> | <a href="/new_recipe">Uusi resepti</a></p>
-    {% else %}
-        <p><a href="/login">Kirjaudu sisään</a> | <a href="/register">Luo tunnus</a></p>
-    {% endif %}
+{% block title %}Reseptit - Etusivu{% endblock %}
 
-    <p><a href="/search">Hae reseptejä</a> | <a href="/categories">Kategoriat</a></p>
-
-    {% for message in get_flashed_messages() %}
-        <p><strong>{{ message }}</strong></p>
-    {% endfor %}
-
+{% block content %}
     <h2>Kaikki reseptit</h2>
 
     {% if recipes %}
         {% for recipe in recipes %}
-            <div>
+            <div class="recipe">
                 <h3><a href="/recipe/{{ recipe.id }}">{{ recipe.title }}</a></h3>
                 <p>Tekijä: <a href="/user/{{ recipe.user_id }}">{{ recipe.username }}</a></p>
-                <p>{{ recipe.content }}</p>
+                <p>{{ recipe.content[:200] }}{% if recipe.content|length > 200 %}...{% endif %}</p>
                 <a href="/recipe/{{ recipe.id }}">Katso resepti</a>
             </div>
-            <hr>
         {% endfor %}
     {% else %}
-        <p>Ei reseptejä vielä. Lisää ensimmäinen!</p>
+        <p>Ei reseptejä vielä. {% if not session.username %}<a href="/register">Luo tunnus</a> ja {% endif %}lisää ensimmäinen!</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}

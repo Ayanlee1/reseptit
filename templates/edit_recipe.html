@@ -1,25 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Muokkaa reseptiä</title>
-</head>
-<body>
-    <h1>Muokkaa reseptiä</h1>
+{% extends "layout.html" %}
 
-    <p><a href="/">Etusivu</a> | <a href="/search">Hae reseptejä</a> | <a href="/categories">Kategoriat</a></p>
+{% block title %}Muokkaa reseptiä{% endblock %}
 
-    {% for message in get_flashed_messages() %}
-        <p><strong>{{ message }}</strong></p>
-    {% endfor %}
+{% block content %}
+    <h2>Muokkaa reseptiä</h2>
 
     <form action="/update_recipe/{{ recipe.id }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        
         <p>
-            Reseptin nimi:<br>
-            <input type="text" name="title" value="{{ recipe.title }}" required>
+            Reseptin nimi (max 100 merkkiä):<br>
+            <input type="text" name="title" value="{{ recipe.title }}" required maxlength="100">
         </p>
         <p>
-            Resepti:<br>
-            <textarea name="content" rows="10" required>{{ recipe.content }}</textarea>
+            Resepti (max 5000 merkkiä):<br>
+            <textarea name="content" rows="10" required maxlength="5000">{{ recipe.content }}</textarea>
         </p>
         <p>
             Kategoriat:<br>
@@ -29,13 +24,11 @@
                 {{ category.name }}<br>
             {% endfor %}
         </p>
-        <input type="submit" value="Tallenna">
+        <input type="submit" value="Tallenna muutokset">
     </form>
 
-    <form action="/delete_recipe/{{ recipe.id }}" method="post" onsubmit="return confirm('Poistetaanko resepti?');">
-        <input type="submit" value="Poista">
+    <form action="/delete_recipe/{{ recipe.id }}" method="post" onsubmit="return confirm('Haluatko varmasti poistaa tämän reseptin?');">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <input type="submit" value="Poista resepti">
     </form>
-
-    <p><a href="/recipe/{{ recipe.id }}">Takaisin reseptiin</a></p>
-</body>
-</html>
+{% endblock %}

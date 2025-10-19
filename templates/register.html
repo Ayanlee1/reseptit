@@ -1,33 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Luo tunnus</title>
-</head>
-<body>
-    <h1>Luo tunnus</h1>
+{% extends "layout.html" %}
 
-    <p><a href="/">Etusivu</a> | <a href="/search">Hae reseptejä</a> | <a href="/categories">Kategoriat</a></p>
+{% block title %}Luo tunnus{% endblock %}
 
-    {% for message in get_flashed_messages() %}
-        <p><strong>{{ message }}</strong></p>
-    {% endfor %}
+{% block content %}
+    <h2>Luo tunnus</h2>
 
     <form action="/register" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        
         <p>
-            Käyttäjätunnus:<br>
-            <input type="text" name="username" value="{{ username or '' }}" required>
+            Käyttäjätunnus (3-50 merkkiä):<br>
+            <input type="text" name="username" value="{{ username or '' }}" required minlength="3" maxlength="50">
         </p>
         <p>
-            Salasana:<br>
-            <input type="password" name="password1" required>
+            Salasana (vähintään 5 merkkiä):<br>
+            <input type="password" name="password1" required minlength="5">
         </p>
         <p>
             Salasana uudelleen:<br>
-            <input type="password" name="password2" required>
+            <input type="password" name="password2" required minlength="5">
         </p>
         <input type="submit" value="Luo tunnus">
     </form>
 
     <p>Onko tunnus? <a href="/login">Kirjaudu sisään</a></p>
-</body>
-</html>
+{% endblock %}

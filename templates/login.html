@@ -1,29 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Kirjaudu sisään</title>
-</head>
-<body>
-    <h1>Kirjaudu sisään</h1>
+{% extends "layout.html" %}
 
-    <p><a href="/">Etusivu</a> | <a href="/search">Hae reseptejä</a> | <a href="/categories">Kategoriat</a></p>
+{% block title %}Kirjaudu sisään{% endblock %}
 
-    {% for message in get_flashed_messages() %}
-        <p><strong>{{ message }}</strong></p>
-    {% endfor %}
+{% block content %}
+    <h2>Kirjaudu sisään</h2>
 
     <form action="/login" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        
         <p>
             Käyttäjätunnus:<br>
-            <input type="text" name="username" required>
+            <input type="text" name="username" required maxlength="50">
         </p>
         <p>
             Salasana:<br>
-            <input type="password" name="password" required>
+            <input type="password" name="password" required minlength="5">
         </p>
         <input type="submit" value="Kirjaudu">
     </form>
 
     <p>Ei tunnusta? <a href="/register">Luo tunnus</a></p>
-</body>
-</html>
+{% endblock %}
